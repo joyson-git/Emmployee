@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+</head>
+<body>
+    <h1>Employee List</h1>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through listEmployee and display each employee -->
+            <tr th:each="employee : ${listEmployee}">
+                <td th:text="${employee.id}"></td>
+                <td th:text="${employee.firstName}"></td>
+                <td th:text="${employee.lastName}"></td>
+                <td th:text="${employee.email}"></td>
+                <td>
+                    <a th:href="@{/showForUpdate/{id}(id=${employee.id})}">Edit</a>
+                    <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- Pagination links -->
+    <div th:if="${totalPages > 1}">
+        <ul>
+            <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
+                <a th:href="@{/page/{pageNo}(pageNo=${pageNo})}" th:text="${pageNo}"></a>
+            </li>
+        </ul>
+    </div>
+    
+    <hr/>
+    
+    <!-- Link to show form for adding a new employee -->
+    <a th:href="@{/showNewEmployeeForm}">Add New Employee</a>
+
+</body>
+</html>
